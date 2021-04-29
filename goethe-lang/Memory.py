@@ -1,23 +1,57 @@
 class Memory:
-    def __init__(self, size=128):
-        self.memory = bytearray(size)
-        self.size = size
-        self.pointer = 0
+    """Represents a register–memory of a given length and allows operations on it.
+
+    Attributes:
+        _memory (bytearray): The byte array that represents the memory.
+        _size (int): Size of the byte array.
+        _pointer (int): Points at the current memory position.
+    """
+
+        """Memory class constructor.
+
+        Args:
+            size (int, optional): Size of the memory. Defaults to 512.
+        """
+
+        self._memory = bytearray(size)
 
     def increment_pointer(self, steps=1):
-        self.pointer = (self.pointer + steps) % self.size
+        """Increments the pointer position by a given number of steps.
+
+        Args:
+            steps (int, optional): Number of steps the pointer should be increased. Defaults to 1.
+        """
+
 
     def decrement_pointer(self, steps=1):
-        self.pointer = (self.pointer - steps) % self.size
+        """Decrements the pointer position by a given number of steps.
 
-    def increment_value(self, steps=1):
-        self.memory[self.pointer] += steps
+        Args:
+            steps (int, optional): Number of steps the pointer should be decreased. Defaults to 1.
+        """
 
-    def decrement_value(self, steps=1):
-        self.memory[self.pointer] -= steps
 
+        """Increments the byte value by a given number.
+
+        Args:
+            number (int, optional): The number by which the byte value should be increased. Defaults to 1.
+        """
+
+        """Decrements the byte value by a given number.
+
+        Args:
+            number (int, optional): The number by which the byte value should be decreased. Defaults to 1.
+        """
     def __sizeof__(self):
-        return self.size
+        """Returns the size of the byte array.
+
+        Returns:
+            int: Size of byte array.
+        """
 
     def __repr__(self):
-        return self.memory.decode('ascii')
+        """Returns the byte array as ascii decoded string.
+
+        Returns:
+            string: Ascii decoded byte array.
+        """
