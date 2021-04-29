@@ -43,7 +43,7 @@ class Memory:
             number (int, optional): The number by which the byte value should be increased. Defaults to 1.
         """
 
-        self._memory[self._pointer] += steps
+        self._memory[self._pointer] += number
 
     def decrement_value(self, number=1):
         """Decrements the byte value by a given number.
@@ -52,7 +52,7 @@ class Memory:
             number (int, optional): The number by which the byte value should be decreased. Defaults to 1.
         """
 
-        self._memory[self._pointer] -= steps
+        self._memory[self._pointer] -= number
 
     def __sizeof__(self):
         """Returns the size of the byte array.
