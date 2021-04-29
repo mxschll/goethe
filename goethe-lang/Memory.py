@@ -7,6 +7,7 @@ class Memory:
         _pointer (int): Points at the current memory position.
     """
 
+    def __init__(self, size=512):
         """Memory class constructor.
 
         Args:
@@ -14,6 +15,8 @@ class Memory:
         """
 
         self._memory = bytearray(size)
+        self._size = size
+        self._pointer = 0
 
     def increment_pointer(self, steps=1):
         """Increments the pointer position by a given number of steps.
@@ -22,6 +25,7 @@ class Memory:
             steps (int, optional): Number of steps the pointer should be increased. Defaults to 1.
         """
 
+        self._pointer = (self._pointer + steps) % self._size
 
     def decrement_pointer(self, steps=1):
         """Decrements the pointer position by a given number of steps.
@@ -30,18 +34,26 @@ class Memory:
             steps (int, optional): Number of steps the pointer should be decreased. Defaults to 1.
         """
 
+        self._pointer = (self._pointer - steps) % self._size
 
+    def increment_value(self, number=1):
         """Increments the byte value by a given number.
 
         Args:
             number (int, optional): The number by which the byte value should be increased. Defaults to 1.
         """
 
+        self._memory[self._pointer] += steps
+
+    def decrement_value(self, number=1):
         """Decrements the byte value by a given number.
 
         Args:
             number (int, optional): The number by which the byte value should be decreased. Defaults to 1.
         """
+
+        self._memory[self._pointer] -= steps
+
     def __sizeof__(self):
         """Returns the size of the byte array.
 
@@ -49,9 +61,14 @@ class Memory:
             int: Size of byte array.
         """
 
+        return self._size
+
     def __repr__(self):
         """Returns the byte array as ascii decoded string.
 
         Returns:
             string: Ascii decoded byte array.
         """
+
+        return self._memory.decode('ascii')
+
