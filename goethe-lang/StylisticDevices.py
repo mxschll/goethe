@@ -11,7 +11,7 @@ class StylisticDevices:
         self.words_in_lines = []
 
         self.__alliterations = []
-        self.__anaphors = []
+        self.__anaphora = []
 
         self.extract_lines()
         self.extract_words_in_lines()
@@ -70,8 +70,8 @@ class StylisticDevices:
 
         return self.__alliterations
 
-    def find_anaphors(self):
-        """Returns a list of positions of anaphors in the text.
+    def find_anaphora(self):
+        """Returns a list of positions of anaphora in the text.
 
         Example:
             In every cry of every Man,
@@ -83,17 +83,18 @@ class StylisticDevices:
              [(0, 1), (1, 2)]
 
         Returns:
-            list: List of positions of anaphors in the text.
+            list: List of positions of anaphora in the text.
         """
 
-        if not self.__anaphors:
+        if not self.__anaphora:
             last_starting_word = None
             for i in range(len(self.lines)):
                 word_list = self.words_in_lines[i]
 
                 if last_starting_word == word_list[0]:
-                    self.__anaphors.append((i - 1, i))
+                    self.__anaphora.append((i - 1, i))
 
                 last_starting_word = word_list[0]
 
-        return self.__anaphors
+        return self.__anaphora
+
