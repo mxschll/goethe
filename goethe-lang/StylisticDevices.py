@@ -10,7 +10,7 @@ class StylisticDevices:
         self.lines = []
         self.words_in_lines = []
 
-        self.__alliterations = []
+        self.__assonance = []
         self.__anaphora = []
         self.__epistrophe = []
 
@@ -67,9 +67,53 @@ class StylisticDevices:
                     initials_count, key=initials_count.get)]
 
                 if max_occurences / len(initials) > 0.6:
-                    self.__alliterations.append(i)
+    def find_assonance(self):
+        """This is probably the worst assonance finding algorithm.
 
-        return self.__alliterations
+        Returns:
+            list: List of positions of assonances in the text.
+        """
+        if not self.__assonance:
+            for i in range(len(self.lines)):
+                word_list = self.words_in_lines[i]
+
+                if len(word_list) <= 3:
+                    # Skip sentences with 3 words or less.
+                    continue
+
+                letters_pairs = {}
+
+                for word in word_list:
+                    if(len(word) <= 3):
+                        # Skip words with 3 characters or less.
+                        continue
+
+                    found_pairs = set()
+
+                    for j in range(len(word)):
+
+                        if j < len(word) - 1 and word[j + 1] in 'aeiouäöü':
+                            pair = word[j] + word[j + 1]
+                            if pair in found_pairs:
+                                continue
+
+                            found_pairs.add(pair)
+                            letters_pairs[pair] = letters_pairs.get(
+                                pair, 0) + 1
+
+                        elif j < len(word) - 1 and word[j] in 'aeiouäöü':
+                            pair = word[j] + word[j + 1]
+                            if pair in found_pairs:
+                                continue
+
+                            found_pairs.add(pair)
+                            letters_pairs[pair] = letters_pairs.get(
+                                pair, 0) + 1
+
+                if letters_pairs[max(letters_pairs, key=letters_pairs.get)] / len(word_list) > 0.6:
+                    self.__assonance.append(i)
+
+        return self.__assonance
 
     def find_anaphora(self):
         """Recognizes anaphora in successive stanzas.
