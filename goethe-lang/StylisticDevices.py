@@ -72,7 +72,7 @@ class StylisticDevices:
         return self.__alliterations
 
     def find_anaphora(self):
-        """Returns a list of positions of anaphora in the text.
+        """Recognizes anaphora in successive stanzas.
 
         Example:
             In every cry of every Man,
@@ -84,7 +84,7 @@ class StylisticDevices:
              [(0, 1), (1, 2)]
 
         Returns:
-            list: List of positions of anaphora in the text.
+            list: List of positions of anaphora in successive stanzas.
         """
 
         if not self.__anaphora:
