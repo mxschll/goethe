@@ -73,6 +73,15 @@ class StylisticDevices:
     def find_anaphors(self):
         """Returns a list of positions of anaphors in the text.
 
+        Example:
+            In every cry of every Man,
+            In every infant's cry of fear,
+            In every voice, in every ban,
+            The mind-forg'd manacles I hear
+
+        Results in:
+             [(0, 1), (1, 2)]
+
         Returns:
             list: List of positions of anaphors in the text.
         """
