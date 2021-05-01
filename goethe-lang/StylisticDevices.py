@@ -10,6 +10,7 @@ class StylisticDevices:
         self.lines = []
         self.words_in_lines = []
 
+        self.__alliteration = []
         self.__assonance = []
         self.__anaphora = []
         self.__epistrophe = []
@@ -44,14 +45,14 @@ class StylisticDevices:
 
         return self.words_in_lines
 
-    def find_alliterations(self):
+    def find_alliteration(self):
         """Returns a list of positions of alliterations in the text.
 
         Returns:
             list: List of positions of alliterations in the text.
         """
 
-        if not self.__alliterations:
+        if not self.__alliteration:
             for i in range(len(self.lines)):
                 word_list = self.words_in_lines[i]
 
@@ -67,6 +68,10 @@ class StylisticDevices:
                     initials_count, key=initials_count.get)]
 
                 if max_occurences / len(initials) > 0.6:
+                    self.__alliteration.append(i)
+
+        return self.__alliteration
+
     def find_assonance(self):
         """This is probably the worst assonance finding algorithm.
 
