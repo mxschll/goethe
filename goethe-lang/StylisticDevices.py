@@ -12,6 +12,7 @@ class StylisticDevices:
 
         self.__alliterations = []
         self.__anaphora = []
+        self.__epistrophe = []
 
         self.extract_lines()
         self.extract_words_in_lines()
@@ -98,3 +99,32 @@ class StylisticDevices:
 
         return self.__anaphora
 
+    def find_epistrophe(self):
+        """Recognizes epistrophe in successive stanzas.
+
+        Example:
+            Most strange, but yet most truly, will I speak:
+            That Angelo's forsworn; is it not strange?
+            That Angelo's a murderer; is't not strange?
+            That Angelo is an adulterous thief,
+            An hypocrite, a virgin-violator;
+            Is it not strange and strange? <-- Is not recognized!
+
+        Results in:
+            [(1, 2)]
+
+        Returns:
+            list: List of positions of epistrophe in successive stanzas.
+        """
+
+        if not self.__epistrophe:
+            last_ending_word = None
+            for i in range(len(self.lines)):
+                word_list = self.words_in_lines[i]
+
+                if last_ending_word == word_list[-1]:
+                    self.__epistrophe.append((i - 1, i))
+
+                last_ending_word = word_list[-1]
+
+        return self.__epistrophe
