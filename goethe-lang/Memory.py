@@ -54,6 +54,22 @@ class Memory:
 
         self._memory[self._pointer] -= number
 
+    def set_value(self, value: int):
+        """Sets memory byte to a given value.
+
+        Args:
+            value (int): Value to be saved.
+        """
+        self._memory[self._pointer] = value
+
+    def get_value(self):
+        """Returns memory value at current pointer position.
+
+        Returns:
+            int: Memory value at current pointer position.
+        """
+        return self._memory[self._pointer]
+
     def __sizeof__(self):
         """Returns the size of the byte array.
 
@@ -71,4 +87,3 @@ class Memory:
         """
 
         return self._memory.decode('ascii')
-
