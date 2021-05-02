@@ -1,5 +1,6 @@
 import re
 import pyphen
+import numpy as np
 
 
 class LanguageTools:
@@ -8,6 +9,7 @@ class LanguageTools:
 
         self.text = text.casefold()
         self.lines = []
+        self.phonetics = []
         self.words_in_lines = []
         self.syllables_in_lines = []
 
@@ -97,6 +99,38 @@ class LanguageTools:
         return self.__alliteration
 
     def find_assonance(self):
+        if not self.__assonance:
+            line_index = 0
+            for line in self.lines:
+                phonetics = [p for p in self.__cologne_phonetics(
+                    line) if len(p) > 2]  # Execlude ponetics with less than 2 chars
+
+                levenshtein_distances = []
+
+                for i in range(len(phonetics)):
+                    min_distance = None
+
+                    for j in range(len(phonetics)):
+                        if j == i:
+                            continue
+                        distance = self.__levenshtein_distance(
+                            phonetics[i], phonetics[j])
+                        if distance != 0 and min_distance is None:  # Execlude same word comparisons
+                            min_distance = distance
+                        if distance != 0 and distance < min_distance:
+                            min_distance = distance
+
+                    if min_distance is not None:
+                        levenshtein_distances.append(min_distance)
+
+                if len(levenshtein_distances) > 1 and sum(levenshtein_distances) / len(levenshtein_distances) < 1.4:
+                    self.__assonance.append(line_index)
+
+                line_index += 1
+
+            return self.__assonance
+
+    def __find_assonance_old(self):
         """This is probably the worst assonance finding algorithm.
 
         Returns:
@@ -202,3 +236,67 @@ class LanguageTools:
 
         return self.__epistrophe
 
+    def __cologne_phonetics(self, string: str):
+        # Source: https://en.wikipedia.org/wiki/Cologne_phonetics
+        REGEX_RULES = [
+            # Replace umlauts and non-aphanumeric chars
+            (r'ä',                   'a'),
+            (r'ö',                   'o'),
+            (r'ü',                   'u'),
+            (r'ß',                   '8'),
+            (r'[^a-z]',               ''),
+            (r'[dt](?![csz])',       '2'),
+            (r'[dt](?=[csz])',       '8'),
+            (r'[ckq]x',             '88'),
+            (r'[sz]c',              '88'),
+            (r'^c(?=[ahkloqrux])',   '4'),
+            (r'^c',                  '8'),
+            (r'(?<![sz])c',          '4'),
+            (r'x',                  '48'),
+            (r'p(?!h)',              '1'),
+            (r'p(?=h)',              '3'),
+            (r'h',                    ''),
+            (r'[aeijouy]',           '0'),
+            (r'b',                   '1'),
+            (r'[fvw]',               '3'),
+            (r'[gkq]',               '4'),
+            (r'l',                   '5'),
+            (r'[mn]',                '6'),
+            (r'r',                   '7'),
+            (r'[csz]',               '8'),
+            (r'([^\w\s])|(.)(?=\2)', ''),
+            (r'\B0', '')
+        ]
+
+        phonetics = []
+        for word in string.split():
+            for sub in REGEX_RULES:
+                word = re.sub(sub[0], sub[1], word, flags=re.IGNORECASE)
+            phonetics.append(word)
+
+        return phonetics
+
+    def __levenshtein_distance(self, seq1, seq2):
+        size_x = len(seq1) + 1
+        size_y = len(seq2) + 1
+        matrix = np.zeros((size_x, size_y))
+        for x in range(size_x):
+            matrix[x, 0] = x
+        for y in range(size_y):
+            matrix[0, y] = y
+
+        for x in range(1, size_x):
+            for y in range(1, size_y):
+                if seq1[x-1] == seq2[y-1]:
+                    matrix[x, y] = min(
+                        matrix[x-1, y] + 1,
+                        matrix[x-1, y-1],
+                        matrix[x, y-1] + 1
+                    )
+                else:
+                    matrix[x, y] = min(
+                        matrix[x-1, y] + 1,
+                        matrix[x-1, y-1] + 1,
+                        matrix[x, y-1] + 1
+                    )
+        return (matrix[size_x - 1, size_y - 1])
