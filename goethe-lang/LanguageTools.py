@@ -2,13 +2,14 @@ import re
 import pyphen
 
 
-class StylisticDevices:
+class LanguageTools:
     def __init__(self, text, lang='de_DE'):
         self.hyphen = pyphen.Pyphen(lang=lang)
 
         self.text = text.casefold()
         self.lines = []
         self.words_in_lines = []
+        self.syllables_in_lines = []
 
         self.__alliteration = []
         self.__assonance = []
@@ -44,6 +45,29 @@ class StylisticDevices:
                 self.words_in_lines.append(word_list)
 
         return self.words_in_lines
+
+    def count_syllables(self, word: str):
+        """Counts syllables in words.
+
+        Args:
+            word (str): Word of which the syllables are to be counted.
+
+        Returns:
+            int: Number of syllables. Zero, if input is not a word.
+        """
+
+        return len(self.hyphen.positions(word.strip())) + 1 if word.strip().isalnum() else 0
+
+    def count_syllables_in_lines(self):
+        if not self.syllables_in_lines:
+            for line in self.words_in_lines:
+                counter = 0
+                for word in line:
+                    counter += self.count_syllables(word)
+
+                self.syllables_in_lines.append(counter)
+
+        return self.syllables_in_lines
 
     def find_alliteration(self):
         """Returns a list of positions of alliterations in the text.
@@ -177,3 +201,4 @@ class StylisticDevices:
                 last_ending_word = word_list[-1]
 
         return self.__epistrophe
+
