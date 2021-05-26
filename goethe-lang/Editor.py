@@ -103,12 +103,15 @@ class Editor:
         self.console_widget = tk.Text(
             col_two,
             bg='black',
-            fg='green2',
+            fg='white',
             padx=10,
             pady=10,
             font=console_fonttype)
         self.console_widget.pack(fill='both', expand=True)
-        self.console_widget.insert('end', 'goethe$ ')
+        self.console_widget.tag_config(
+            'propmt',
+            foreground='green2')
+        self.__console_append('goethe$ ', 'propmt')
 
         """
         Init program widget.
@@ -290,7 +293,7 @@ class Editor:
         Args:
             event (bool, optional): Tkinter event. Defaults to False.
         """
-        self.__console_append('\ngoethe$ ')
+        self.__console_append('\ngoethe$ ', 'propmt')
         self.__update_widgets()
 
     def reset(self, event=False):
@@ -303,7 +306,7 @@ class Editor:
         self.interpreter.set_text(self.__get_text())
         self.__update_widgets()
 
-    def __console_append(self, text=''):
+    def __console_append(self, text='', style=None):
         """Appends the given text to the console widget and scrolls to the bottom.
 
         Args:
@@ -311,7 +314,7 @@ class Editor:
         """
 
         self.console_widget['state'] = 'normal'
-        self.console_widget.insert('end', text)
+        self.console_widget.insert('end', text, style)
         self.console_widget['state'] = 'disabled'
         self.console_widget.see('end')
 
