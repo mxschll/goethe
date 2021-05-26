@@ -165,7 +165,7 @@ class Editor:
                              command=self.__step_forward,
                              accelerator="Ctrl+G")
         menu_two.add_command(label="Reset",
-                             command=self.reset,
+                             command=self.__reset,
                              accelerator="Ctrl+R")
         menu_bar.add_cascade(label="Program", menu=menu_two)
 
@@ -184,7 +184,7 @@ class Editor:
         self.root.bind_all('<Control-S>', self.__save_file_as)
         self.root.bind_all('<Control-G>', self.__run_program)
         self.root.bind_all('<Control-g>', self.__step_forward)
-        self.root.bind_all('<Control-r>', self.reset)
+        self.root.bind_all('<Control-r>', self.__reset)
         self.root.bind_all('<Control-w>', lambda e: self.root.quit())
 
     def main(self) -> None:
@@ -296,7 +296,7 @@ class Editor:
         self.__console_append('\ngoethe$ ', 'prompt')
         self.__update_widgets()
 
-    def reset(self, event=False) -> None:
+    def __reset(self, event=False) -> None:
         """ Resets the program to the initial state .
 
         Args:
