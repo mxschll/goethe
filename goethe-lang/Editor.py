@@ -109,9 +109,9 @@ class Editor:
             font=console_fonttype)
         self.console_widget.pack(fill='both', expand=True)
         self.console_widget.tag_config(
-            'propmt',
+            'prompt',
             foreground='green2')
-        self.__console_append('goethe$ ', 'propmt')
+        self.__console_append('goethe$ ', 'prompt')
 
         """
         Init program widget.
@@ -293,7 +293,7 @@ class Editor:
         Args:
             event (bool, optional): Tkinter event. Defaults to False.
         """
-        self.__console_append('\ngoethe$ ', 'propmt')
+        self.__console_append('\ngoethe$ ', 'prompt')
         self.__update_widgets()
 
     def reset(self, event=False):
