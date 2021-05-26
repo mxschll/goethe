@@ -34,8 +34,11 @@ class Editor:
 
         self.interpreter = Interpreter()
         self.interpreter.add_event_listener('<out>', self.__console_append)
-        self.interpreter.add_event_listener('<step>', self.__update_widgets)
         self.interpreter.add_event_listener('<end>', self.__reached_end)
+
+        # The <step> listener was replaced by self.__step_forward() because it
+        # caused performance problems with large programs.
+        # self.interpreter.add_event_listener('<step>', self.__update_widgets)
 
         # Path and name of the currently opened file
         self.filepath = False
@@ -156,7 +159,7 @@ class Editor:
                              command=self.__run_program,
                              accelerator="Ctrl+Shift+G")
         menu_two.add_command(label="Step",
-                             command=self.interpreter.step(),
+                             command=self.__step_forward,
                              accelerator="Ctrl+G")
         menu_two.add_command(label="Reset",
                              command=self.reset,
@@ -177,9 +180,9 @@ class Editor:
         self.root.bind_all('<Control-s>', self.__save_file)
         self.root.bind_all('<Control-S>', self.__save_file_as)
         self.root.bind_all('<Control-G>', self.__run_program)
+        self.root.bind_all('<Control-g>', self.__step_forward)
         self.root.bind_all('<Control-r>', self.reset)
         self.root.bind_all('<Control-w>', lambda e: self.root.quit())
-        self.root.bind_all('<Control-g>', lambda e: self.interpreter.step())
 
     def main(self) -> None:
         """Starts the editor window mainloop.
@@ -270,6 +273,16 @@ class Editor:
             event (bool, optional): Tkinter event. Defaults to False.
         """
         self.interpreter.run()
+
+    def __step_forward(self, event=False):
+        """Runs the next command of the program.
+
+        Args:
+            event (bool, optional): Tkinter event. Defaults to False.
+        """
+
+        self.interpreter.step()
+        self.__update_widgets()
 
     def __reached_end(self, event=False):
         """Updates widgets and creates new line in console widget.
