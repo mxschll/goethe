@@ -269,7 +269,7 @@ class Editor:
 
         self.memory_widget['state'] = 'disabled'
 
-    def __run_program(self, event=False):
+    def __run_program(self, event=False) -> None:
         """Runs the program.
 
         Args:
@@ -277,7 +277,7 @@ class Editor:
         """
         self.interpreter.run()
 
-    def __step_forward(self, event=False):
+    def __step_forward(self, event=False) -> None:
         """Runs the next command of the program.
 
         Args:
@@ -287,7 +287,7 @@ class Editor:
         self.interpreter.step()
         self.__update_widgets()
 
-    def __reached_end(self, event=False):
+    def __reached_end(self, event=False) -> None:
         """Updates widgets and creates new line in console widget.
 
         Args:
@@ -296,7 +296,7 @@ class Editor:
         self.__console_append('\ngoethe$ ', 'prompt')
         self.__update_widgets()
 
-    def reset(self, event=False):
+    def reset(self, event=False) -> None:
         """ Resets the program to the initial state .
 
         Args:
@@ -306,7 +306,7 @@ class Editor:
         self.interpreter.set_text(self.__get_text())
         self.__update_widgets()
 
-    def __console_append(self, text='', style=None):
+    def __console_append(self, text='', style=None) -> None:
         """Appends the given text to the console widget and scrolls to the bottom.
 
         Args:
