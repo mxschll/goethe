@@ -241,7 +241,7 @@ class Editor:
                 self.program_widget.insert('end', command + '\n')
 
         # Scroll active command into view
-        self.program_widget.see(float(program_pointer + 20))
+        self.program_widget.see(float(program_pointer + 5))
         self.program_widget['state'] = 'disabled'
 
         # Update memory widget
