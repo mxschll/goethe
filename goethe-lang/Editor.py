@@ -204,7 +204,7 @@ class Editor:
 
         self.root.title(title)
 
-    def __text_modified(self, event=False) -> None:
+    def __text_modified(self, event=None) -> None:
         """Passes the current text to the interpreter and updates widgets.
 
         Args:
@@ -224,7 +224,7 @@ class Editor:
 
         return self.editor.get(1.0, 'end')
 
-    def __update_widgets(self, event=False) -> None:
+    def __update_widgets(self, event=None) -> None:
         """Updates memory and console widget text.
 
         Args:
@@ -269,7 +269,7 @@ class Editor:
 
         self.memory_widget['state'] = 'disabled'
 
-    def __run_program(self, event=False) -> None:
+    def __run_program(self, event=None) -> None:
         """Runs the program.
 
         Args:
@@ -277,7 +277,7 @@ class Editor:
         """
         self.interpreter.run()
 
-    def __step_forward(self, event=False) -> None:
+    def __step_forward(self, event=None) -> None:
         """Runs the next command of the program.
 
         Args:
@@ -287,7 +287,7 @@ class Editor:
         self.interpreter.step()
         self.__update_widgets()
 
-    def __reached_end(self, event=False) -> None:
+    def __reached_end(self, event=None) -> None:
         """Updates widgets and creates new line in console widget.
 
         Args:
@@ -296,7 +296,7 @@ class Editor:
         self.__console_append('\ngoethe$ ', 'prompt')
         self.__update_widgets()
 
-    def __reset(self, event=False) -> None:
+    def __reset(self, event=None) -> None:
         """ Resets the program to the initial state .
 
         Args:
@@ -318,7 +318,7 @@ class Editor:
         self.console_widget['state'] = 'disabled'
         self.console_widget.see('end')
 
-    def __open_file(self, event=False) -> None:
+    def __open_file(self, event=None) -> None:
         """Loads file into the editor.
 
         Args:
@@ -340,7 +340,7 @@ class Editor:
             self.interpreter.set_text(self.__get_text())
             self.__update_widgets()
 
-    def __save_file_as(self, event=False) -> None:
+    def __save_file_as(self, event=None) -> None:
         """Saves the current text after asking for a filename.
 
         Args:
@@ -361,7 +361,7 @@ class Editor:
             self.filename = os.path.basename(self.filepath)
             self.__set_title(file_saved=True)
 
-    def __save_file(self, event=False) -> None:
+    def __save_file(self, event=None) -> None:
         """Saves the current text without asking for a filename.
 
         Args:
