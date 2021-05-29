@@ -7,7 +7,7 @@ class Memory:
         _pointer (int): Points at the current memory position.
     """
 
-    def __init__(self, size=512):
+    def __init__(self, size=1024):
         """Memory class constructor.
 
         Args:
