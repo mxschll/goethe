@@ -30,7 +30,7 @@ class LanguageTools:
 
         if not self.lines:
             self.lines = [line.strip()
-                          for line in self.text.splitlines() if line.strip()]
+                          for line in self.text.splitlines() if re.sub(r"[^a-zA-Z0-9äöüÄÖÜß ]", '', line)]
 
         return self.lines
 
