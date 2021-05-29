@@ -31,7 +31,7 @@ class Tokenizer:
         self.syllables = ''.join(map(str, self.syllables))
         self.syllables = [int(char) for char in self.syllables]
 
-    def tokenize(self):
+    def tokenize(self) -> list:
         """Converts syllables into a list of program tokens.
 
         Returns:
