@@ -14,7 +14,7 @@ class Memory:
             size (int, optional): Size of the memory. Defaults to 512.
         """
 
-        self._memory = bytearray(size)
+        self._memory = [0]*size
         self._size = size
         self._pointer = 0
 
