@@ -32,7 +32,7 @@ class Editor:
     def __init__(self) -> None:
         self.title = 'Goethe Editor'
 
-        self.interpreter = Interpreter()
+        self.interpreter = Interpreter(console_mode=False)
         self.interpreter.add_event_listener('<out>', self.__console_append)
         self.interpreter.add_event_listener('<end>', self.__reached_end)
 
@@ -106,12 +106,25 @@ class Editor:
             fg='white',
             padx=10,
             pady=10,
+            height=10,
             font=console_fonttype)
         self.console_widget.pack(fill='both', expand=True)
         self.console_widget.tag_config(
             'prompt',
             foreground='green2')
         self.__console_append('goethe$ ', 'prompt')
+
+        self.user_input = TextWidget(
+            col_two,
+            padx=10,
+            pady=5,
+            height=1,
+            wrap=None,
+            font=console_fonttype)
+        self.user_input.pack(fill='x', expand=False)
+        self.user_input.insert('end', 'User Input...')
+        self.user_input.bind('<<TextModified>>',
+                             lambda x: self.interpreter.set_user_input(self.user_input.get(1.0, 'end')))
 
         """
         Init program widget.
@@ -211,7 +224,7 @@ class Editor:
             event (bool, optional): Tkinter event. Defaults to False.
         """
 
-        self.interpreter.set_text(self.__get_text())
+        self.interpreter.set_code(self.__get_text())
         self.__update_widgets()
         self.__set_title()
 
@@ -233,7 +246,7 @@ class Editor:
 
         program_pointer = self.interpreter.pointer
         program_instruction = self.interpreter._get_current_instruction()
-        memory_pointer = self.interpreter.memory.get_pointer()
+        memory_pointer = self.interpreter.memory.get_pointer_value()
         memory_value = self.interpreter.memory.get_value()
 
         # Update program widget
@@ -242,9 +255,10 @@ class Editor:
 
         for i, command in enumerate(self.interpreter.program):
             if i == program_pointer:
-                self.program_widget.insert('end', command + '\n', 'active')
+                self.program_widget.insert(
+                    'end', command.name + '\n', 'active')
             else:
-                self.program_widget.insert('end', command + '\n')
+                self.program_widget.insert('end', command.name + '\n')
 
         # Scroll active command into view
         self.program_widget.see(float(program_pointer + 5))
@@ -295,6 +309,7 @@ class Editor:
         """
         self.__console_append('\ngoethe$ ', 'prompt')
         self.__update_widgets()
+        self.user_input.delete(1.0, 'end')
 
     def __reset(self, event=None) -> None:
         """ Resets the program to the initial state .
@@ -303,7 +318,7 @@ class Editor:
             event (bool, optional): Tkinter event. Defaults to False.
         """
 
-        self.interpreter.set_text(self.__get_text())
+        self.interpreter.set_code(self.__get_text())
         self.__update_widgets()
 
     def __console_append(self, text='', style=None) -> None:
@@ -337,7 +352,7 @@ class Editor:
             self.filename = os.path.basename(self.filepath)
             self.editor.delete(1.0, 'end')
             self.editor.insert('end', file.read())
-            self.interpreter.set_text(self.__get_text())
+            self.interpreter.set_code(self.__get_text())
             self.__update_widgets()
 
     def __save_file_as(self, event=None) -> None:
@@ -374,7 +389,7 @@ class Editor:
 
         with open(self.filepath, 'w') as file:
             file.write(self.__get_text())
-            self.interpreter.set_text(self.__get_text())
+            self.interpreter.set_code(self.__get_text())
             self.__set_title(file_saved=True)
             self.__update_widgets()
 
