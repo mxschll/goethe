@@ -6,8 +6,8 @@ class Token(Enum):
     """
 
     PASS = 0
-    IF = 1
-    FI = 2
+    LOOP = 1
+    POOL = 2
     INCVAL = 3
     DECVAL = 4
     INCPTR = 5

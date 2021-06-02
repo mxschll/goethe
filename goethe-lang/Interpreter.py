@@ -40,7 +40,7 @@ class Interpreter:
 
         pass
 
-    def IF(self) -> None:
+    def LOOP(self) -> None:
         """Jumps to the appropriate FI command in the program if current memory value == 0.
         """
 
@@ -52,12 +52,12 @@ class Interpreter:
         nesting = 1
         while nesting:
             instruction = self._get_next_instruction()
-            if instruction == Token.IF:
+            if instruction == Token.LOOP:
                 nesting += 1
-            elif instruction == Token.FI:
+            elif instruction == Token.POOL:
                 nesting -= 1
 
-    def FI(self) -> None:
+    def POOL(self) -> None:
         """Jumps to the appropriate IF command in the program if current memory value != 0.
         """
 
@@ -69,9 +69,9 @@ class Interpreter:
         nesting = -1
         while nesting:
             instruction = self._get_previous_instruction()
-            if instruction == Token.IF:
+            if instruction == Token.LOOP:
                 nesting += 1
-            elif instruction == Token.FI:
+            elif instruction == Token.POOL:
                 nesting -= 1
 
     def IN(self) -> None:
