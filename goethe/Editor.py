@@ -187,7 +187,7 @@ class Editor:
         menu_bar.add_cascade(label="Help", menu=menu_three)
         menu_three.add_command(label="About...",
                                command=lambda: webbrowser.open(
-                                   'https://github.com/mxschll/goethe-lang'))
+                                   'https://github.com/mxschll/goethe'))
 
         self.root.config(menu=menu_bar)
 
