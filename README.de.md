@@ -1,6 +1,9 @@
 # Goethe Programmiersprache
 
+[toc]
+
 ## Anforderungen
+
 - Python  3.8+
 ## Sprachspezifikation
 
@@ -44,8 +47,10 @@ Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Anaphern wird
 > _**Wer** nie die kummervollen Nächte_ <small>(9 Silben)</small>
 >
 > _Auf seinem Bette weinend saß.“_ <small>(8 Silben)</small>
->
-> <small>(Johann Wolfgang von Goethe: Wer nie sein Brot mit Tränen aß...)</small>
+
+<sub>(Johann Wolfgang von Goethe: Wer nie sein Brot mit Tränen aß...)</sub>
+
+
 
 Das obige Beispiel führt zu folgenden Zahlenfolge: `[17, 8]`.
 
@@ -64,6 +69,6 @@ Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Epiphora wird
 > _Wer in Furcht sogar den Wein scheut,_ <small>(8 Silben)</small>
 >
 > _trinkt das eingemischte Gift nie._ <small>(8 Silben)</small>
->
-> <small>(August von Platen)</small>
+
+<sub>(August von Platen)</sub>
 
