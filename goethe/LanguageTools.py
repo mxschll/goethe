@@ -37,8 +37,8 @@ class LanguageTools:
         """
 
         if not self.lines:
-            self.lines = [line.strip()
-                          for line in self.text.splitlines() if re.sub(r"[^a-zA-Z0-9äöüÄÖÜß ]", '', line)]
+            self.lines = [line.strip() for line in self.text.splitlines()
+                          if re.sub(r"[^a-zA-Z0-9äöüÄÖÜß ]", '', line)]
 
         return self.lines
 
@@ -93,22 +93,22 @@ class LanguageTools:
         """
 
         if not self.__alliteration:
-            for i in range(len(self.extract_lines())):
-                word_list = self.extract_words_in_lines()[i]
+            for index, word_list in enumerate(self.extract_words_in_lines()):
 
                 if(len(word_list) <= 3):
                     # Skip sentences with 3 words or less.
                     continue
 
                 initials = [word[0] for word in word_list]
-                initials_count = dict((c, initials.count(c))
-                                      for c in initials)
+                # Count the number of words that begin with the same letter.
+                initials_count = dict((c, initials.count(c)) for c in initials)
 
-                max_occurences = initials_count[max(
-                    initials_count, key=initials_count.get)]
+                max_occurences = initials_count[
+                    max(initials_count, key=initials_count.get)]
 
                 if max_occurences / len(initials) > 0.6:
-                    self.__alliteration.append(i)
+                    # If over 60% of the words start with the same letter, it's an aliteration.
+                    self.__alliteration.append(index)
 
         return self.__alliteration
 
@@ -123,37 +123,34 @@ class LanguageTools:
         """
 
         if not self.__assonance:
-            line_index = 0
-            for line in self.extract_words_in_lines():
+            for index, word_list in enumerate(self.extract_words_in_lines()):
 
                 phonetics = []
-                for word in line:
+                for word in word_list:
                     p = self.__cologne_phonetics(word)
                     if len(p) > 2:
                         phonetics.append(p)
 
-                levenshtein_distances = []
+                distances = []
 
-                for i in range(len(phonetics)):
+                for i, one in enumerate(phonetics):
                     min_distance = None
 
-                    for j in range(len(phonetics)):
+                    for j, two in enumerate(phonetics):
                         if j == i:
                             continue
-                        distance = self.__levenshtein_distance(
-                            phonetics[i], phonetics[j])
-                        if distance != 0 and min_distance is None:  # Execlude same word comparisons
+
+                        distance = self.__levenshtein_distance(one, two)
+                        if distance != 0 and min_distance is None:
                             min_distance = distance
                         if distance != 0 and distance < min_distance:
                             min_distance = distance
 
                     if min_distance is not None:
-                        levenshtein_distances.append(min_distance)
+                        distances.append(min_distance)
 
-                if len(levenshtein_distances) > 2 and sum(levenshtein_distances) / len(levenshtein_distances) < 1.3:
-                    self.__assonance.append(line_index)
-
-                line_index += 1
+                if len(distances) > 2 and sum(distances) / len(distances) < 1.3:
+                    self.__assonance.append(index)
 
             return self.__assonance
 
@@ -223,11 +220,9 @@ class LanguageTools:
 
         if not self.__anaphora:
             last_starting_word = None
-            for i in range(len(self.lines)):
-                word_list = self.words_in_lines[i]
-
+            for index, word_list in enumerate(self.extract_words_in_lines()):
                 if last_starting_word == word_list[0]:
-                    self.__anaphora.append((i - 1, i))
+                    self.__anaphora.append((index - 1, index))
 
                 last_starting_word = word_list[0]
 
@@ -253,11 +248,9 @@ class LanguageTools:
 
         if not self.__epistrophe:
             last_ending_word = None
-            for i in range(len(self.lines)):
-                word_list = self.words_in_lines[i]
-
+            for index, word_list in enumerate(self.extract_words_in_lines()):
                 if last_ending_word == word_list[-1]:
-                    self.__epistrophe.append((i - 1, i))
+                    self.__epistrophe.append((index - 1, index))
 
                 last_ending_word = word_list[-1]
 
