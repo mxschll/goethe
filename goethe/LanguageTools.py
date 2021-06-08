@@ -21,7 +21,7 @@ class LanguageTools:
         self.extract_lines()
         self.extract_words_in_lines()
 
-    def extract_lines(self):
+    def extract_lines(self) -> list:
         """Splits text into lines, strips whitespace and removes empty lines.
 
         Returns:
@@ -34,7 +34,7 @@ class LanguageTools:
 
         return self.lines
 
-    def extract_words_in_lines(self):
+    def extract_words_in_lines(self) -> list:
         """Creates multidimensional list with a list of words for every line.
 
         Returns:
@@ -48,7 +48,7 @@ class LanguageTools:
 
         return self.words_in_lines
 
-    def count_syllables(self, word: str):
+    def count_syllables(self, word: str) -> int:
         """Counts syllables in words.
 
         Args:
@@ -60,7 +60,7 @@ class LanguageTools:
 
         return len(self.hyphen.positions(word.strip())) + 1 if word.strip().isalnum() else 0
 
-    def count_syllables_in_lines(self):
+    def count_syllables_in_lines(self) -> list:
         if not self.syllables_in_lines:
             for line in self.words_in_lines:
                 counter = 0
@@ -71,7 +71,7 @@ class LanguageTools:
 
         return self.syllables_in_lines
 
-    def find_alliteration(self):
+    def find_alliteration(self) -> list:
         """Returns a list of positions of alliterations in the text.
 
         Returns:
@@ -178,7 +178,7 @@ class LanguageTools:
 
         return self.__assonance
 
-    def find_anaphora(self):
+    def find_anaphora(self) -> list:
         """Recognizes anaphora in successive stanzas.
 
         Example:
@@ -206,7 +206,7 @@ class LanguageTools:
 
         return self.__anaphora
 
-    def find_epistrophe(self):
+    def find_epistrophe(self) -> list:
         """Recognizes epistrophe in successive stanzas.
 
         Example:
@@ -276,7 +276,7 @@ class LanguageTools:
 
         return phonetics
 
-    def __levenshtein_distance(self, seq1, seq2):
+    def __levenshtein_distance(self, seq1, seq2) -> float:
         size_x = len(seq1) + 1
         size_y = len(seq2) + 1
         matrix = np.zeros((size_x, size_y))
