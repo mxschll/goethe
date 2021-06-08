@@ -1,10 +1,18 @@
 import re
 import pyphen
-import numpy as np
 
 
 class LanguageTools:
-    def __init__(self, text, lang='de_DE'):
+    """Analyzes text for stylistic devices and syllables.
+    """
+
+    def __init__(self, text: str, lang='de_DE'):
+        """
+        Args:
+            text (str): Text to analyze.
+            lang (str, optional): Language of the text. Defaults to 'de_DE'.
+        """
+
         self.hyphen = pyphen.Pyphen(lang=lang)
 
         self.text = text.casefold()
@@ -38,31 +46,37 @@ class LanguageTools:
         """Creates multidimensional list with a list of words for every line.
 
         Returns:
-            list: List of list with words for every text line.
+            list: List of lists with words for every text line.
         """
 
         if not self.words_in_lines:
-            for line in self.lines:
+            for line in self.extract_lines():
                 word_list = re.sub(r"[^a-zA-Z0-9äöüÄÖÜß ]", '', line).split()
                 self.words_in_lines.append(word_list)
 
         return self.words_in_lines
 
     def count_syllables(self, word: str) -> int:
-        """Counts syllables in words.
+        """Counts the syllables of the given word.
 
         Args:
             word (str): Word of which the syllables are to be counted.
 
         Returns:
-            int: Number of syllables. Zero, if input is not a word.
+            int: Number of syllables. Zero, if input is not a valid word.
         """
 
         return len(self.hyphen.positions(word.strip())) + 1 if word.strip().isalnum() else 0
 
     def count_syllables_in_lines(self) -> list:
+        """Returns a list of syllabes for each line in the text.
+
+        Returns:
+            list: List of syllables per line.
+        """
+
         if not self.syllables_in_lines:
-            for line in self.words_in_lines:
+            for line in self.extract_words_in_lines():
                 counter = 0
                 for word in line:
                     counter += self.count_syllables(word)
@@ -79,8 +93,8 @@ class LanguageTools:
         """
 
         if not self.__alliteration:
-            for i in range(len(self.lines)):
-                word_list = self.words_in_lines[i]
+            for i in range(len(self.extract_lines())):
+                word_list = self.extract_words_in_lines()[i]
 
                 if(len(word_list) <= 3):
                     # Skip sentences with 3 words or less.
@@ -98,12 +112,25 @@ class LanguageTools:
 
         return self.__alliteration
 
-    def find_assonance(self):
+    def find_assonance(self) -> list:
+        """Returns a list of positions of assonance in the text.
+
+        Example:
+            The light of the fire is a sight.
+
+        Returns:
+            list: List of positions of assonance in the text.
+        """
+
         if not self.__assonance:
             line_index = 0
-            for line in self.lines:
-                phonetics = [p for p in self.__cologne_phonetics(
-                    line) if len(p) > 2]  # Execlude ponetics with less than 2 chars
+            for line in self.extract_words_in_lines():
+
+                phonetics = []
+                for word in line:
+                    p = self.__cologne_phonetics(word)
+                    if len(p) > 2:
+                        phonetics.append(p)
 
                 levenshtein_distances = []
 
@@ -123,7 +150,7 @@ class LanguageTools:
                     if min_distance is not None:
                         levenshtein_distances.append(min_distance)
 
-                if len(levenshtein_distances) > 1 and sum(levenshtein_distances) / len(levenshtein_distances) < 1.4:
+                if len(levenshtein_distances) > 2 and sum(levenshtein_distances) / len(levenshtein_distances) < 1.3:
                     self.__assonance.append(line_index)
 
                 line_index += 1
@@ -236,10 +263,44 @@ class LanguageTools:
 
         return self.__epistrophe
 
-    def __cologne_phonetics(self, string: str):
-        # Source: https://en.wikipedia.org/wiki/Cologne_phonetics
+    def __cologne_phonetics(self, word: str) -> str:
+        """Applies the cologne phonetics algorithm to the given word.
+        Source: https://en.wikipedia.org/wiki/Cologne_phonetics
+
+        Args:
+            word (str): Word to which the algorithm should be applied.
+
+        Returns:
+            str: Cologne phonetics sequence for the given word.
+        """
+
+        """
+            The following table lists the rules of Cologne phonetics.
+            |                           Letter                            |                        Context                        | Code |
+            | :---------------------------------------------------------: | :---------------------------------------------------: | :--: |
+            |                     A, E, I, J, O, U, Y                     |                                                       |  0   |
+            |                              H                              |                                                       |  -   |
+            |                              B                              |                                                       |  1   |
+            |                              P                              |                     not before H                      |      |
+            |                            D, T                             |                  not before C, S, Z                   |  2   |
+            |                           F, V, W                           |                                                       |  3   |
+            |                              P                              |                       before H                        |      |
+            |                           G, K, Q                           |                                                       |  4   |
+            |                              C                              | in the initial sound before A, H, K, L, O, Q, R, U, X |      |
+            |        before A, H, K, O, Q, U, X except after S, Z         |                                                       |      |
+            |                              X                              |                   not after C, K, Q                   |  48  |
+            |                              L                              |                                                       |  5   |
+            |                            M, N                             |                                                       |  6   |
+            |                              R                              |                                                       |  7   |
+            |                            S, Z                             |                                                       |  8   |
+            |                              C                              |                      after S, Z                       |      |
+            | in initial position except before A, H, K, L, O, Q, R, U, X |                                                       |      |
+            |               not before A, H, K, O, Q, U, X                |                                                       |      |
+            |                            D, T                             |                    before C, S, Z                     |      |
+            |                              X                              |                     after C, K, Q                     |      |
+        """
+
         REGEX_RULES = [
-            # Replace umlauts and non-aphanumeric chars
             (r'ä',                   'a'),
             (r'ö',                   'o'),
             (r'ü',                   'u'),
@@ -268,35 +329,36 @@ class LanguageTools:
             (r'\B0', '')
         ]
 
-        phonetics = []
-        for word in string.split():
-            for sub in REGEX_RULES:
-                word = re.sub(sub[0], sub[1], word, flags=re.IGNORECASE)
-            phonetics.append(word)
+        for sub in REGEX_RULES:
+            word = re.sub(sub[0], sub[1], word, flags=re.IGNORECASE)
 
-        return phonetics
+        return word
 
-    def __levenshtein_distance(self, seq1, seq2) -> float:
-        size_x = len(seq1) + 1
-        size_y = len(seq2) + 1
-        matrix = np.zeros((size_x, size_y))
-        for x in range(size_x):
-            matrix[x, 0] = x
-        for y in range(size_y):
-            matrix[0, y] = y
+    def __levenshtein_distance(self, seq1: str, seq2: str) -> int:
+        """Calculates the levenshtein distance of two strings.
+        Source: https://en.wikipedia.org/wiki/Levenshtein_distance#Definition
 
-        for x in range(1, size_x):
-            for y in range(1, size_y):
-                if seq1[x-1] == seq2[y-1]:
-                    matrix[x, y] = min(
-                        matrix[x-1, y] + 1,
-                        matrix[x-1, y-1],
-                        matrix[x, y-1] + 1
-                    )
+        Args:
+            seq1 (str): String one.
+            seq2 (str): String two.
+
+        Returns:
+            int: Levenshtein distance of the given strings.
+        """
+
+        if len(seq1) > len(seq2):
+            seq1, seq2 = seq2, seq1
+
+        d = range(len(seq1) + 1)
+        for i, char2 in enumerate(seq2):
+            d_tmp = [i+1]
+            for j, char1 in enumerate(seq1):
+                if char1 == char2:
+                    d_tmp.append(d[j])
                 else:
-                    matrix[x, y] = min(
-                        matrix[x-1, y] + 1,
-                        matrix[x-1, y-1] + 1,
-                        matrix[x, y-1] + 1
-                    )
-        return (matrix[size_x - 1, size_y - 1])
+                    d_tmp.append(1 + min((d[j],
+                                          d[j+1],
+                                          d_tmp[-1])))
+            d = d_tmp
+
+        return d[-1]
