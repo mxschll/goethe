@@ -40,7 +40,9 @@ Eine Anapher ist die Wiederholung eines Wortes oder einer Wortgruppe zu Beginn a
 Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Anaphern wird addiert.
 
 > _**Wer** nie sein Brot mit Tränen aß,_ (8 Silben)
+>
 > _**Wer** nie die kummervollen Nächte_ (9 Silben)
+>
 > _Auf seinem Bette weinend saß.“_ (8 Silben)
 >
 > <sub>(Johann Wolfgang von Goethe: Wer nie sein Brot mit Tränen aß...)</sub>
@@ -56,8 +58,12 @@ Die Epiphora bezeichnet die Wiederholung eines Wortes oder einer Wortgruppe am E
 Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Epiphora wird subtrahiert.
 
 > _Sturm und Meeresgefährde trifft **nie**_ (9 Silben)
+>
 > _Dich den Klugen, der geschifft **nie**;_ (8 Silben)
+>
 > _Wer in Furcht sogar den Wein scheut,_ (8 Silben)
+>
 > _trinkt das eingemischte Gift nie._ (8 Silben)
 >
 > <sub>(August von Platen)</sub>
+
