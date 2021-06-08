@@ -1,10 +1,25 @@
 # Goethe Programmiersprache
 
+Die Goethe Programmiersprache ist eine dynamische Programmiersprache, so entworfen, dass Programme in Gedichtform geschrieben werden können.
+
+### Wozu das ganze?
+
+In der heutigen Welt der Programmiersprachen sehen fast alle Programme gleich aus. Dem Code
+fehlt es an eigenem Charakter und Charme. Die Individualität eines einzelnen Programmierers
+lässt sich nicht in den niedergeschriebenen Zeilen wiederfinden.
+
+Dabei ist Programmieren doch ein höchst kreativer Prozess. Man könnte fast sagen, Programmieren ist wie das Schreiben eines Gedichtes. Mit jeder Zeile Code wächst des Programmierers Komposition um einen weiteren Vers.
+
+Die Goethe Programmiersprache löst das geschilderte Problem: Sie befreit den Entwickler von den ihm auferlegten lyrischen Fesseln.
+
 
 
 ## 1. Anforderungen
 
 - Python  3.8+
+
+
+
 ## 2. Sprachspezifikation
 
 Die Goethe Programmiersprache baut auf den Silben der jeweiligen Verse eines Gedichtes auf. Je nach Anzahl der Silben wird ein entsprechender Befehl ausgeführt. Eine Liste der verfügbaren Befehle findet sich in der unten stehenden Tabelle.
@@ -28,7 +43,7 @@ In jedem Vers werden die Silben gezählt und in einen entsprechenden Befehl umge
 
 Die Anzahl der Silben `n` wird immer `n mod 10` genommen. Hat ein Vers beispielsweise 13 Silben, so wird dieser wie folgt umgewandelt: `13 mod 10 = 3 -> INCVAL`.
 
-___
+
 
 ### 2.2 Stilmittel
 
