@@ -38,8 +38,8 @@ class Tokenizer:
 
         # Subtracts the syllable numbers of consecutive verses with anaphors.
         for verse in epistrophe[::-1]:
-            self.syllables[verse[0]] -= self.syllables[verse[1]]
-            del self.syllables[verse[1]]
+            self.syllables[verse[0] - len(anaphora)] -= self.syllables[verse[1] - len(anaphora)]
+            del self.syllables[verse[1] - len(anaphora)]
 
         self.syllables = map(abs, self.syllables)
 
