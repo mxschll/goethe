@@ -1,15 +1,15 @@
 # Goethe Programmiersprache
 
-[toc]
 
-## Anforderungen
+
+## 1. Anforderungen
 
 - Python  3.8+
-## Sprachspezifikation
+## 2. Sprachspezifikation
 
 Die Goethe Programmiersprache baut auf den Silben der jeweiligen Verse eines Gedichtes auf. Je nach Anzahl der Silben wird ein entsprechender Befehl ausgeführt. Eine Liste der verfügbaren Befehle findet sich in der unten stehenden Tabelle.
 
-### Silben pro Vers
+### 2.1 Silben pro Vers
 
 In jedem Vers werden die Silben gezählt und in einen entsprechenden Befehl umgewandelt:
 
@@ -30,11 +30,11 @@ Die Anzahl der Silben `n` wird immer `n mod 10` genommen. Hat ein Vers beispiels
 
 ___
 
-### Stilmittel
+### 2.2 Stilmittel
 
 Neben der Silbenanzahl ist es auch möglich, mit bestimmten Stilmitteln Aktionen ausführen.
 
-#### Anapher
+#### 2.2.1 Anapher
 
 Eine Anapher ist die Wiederholung eines Wortes oder einer Wortgruppe zu Beginn aufeinanderfolgender Verse.
 
@@ -51,7 +51,7 @@ Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Anaphern wird
 
 Das obige Beispiel führt zu folgenden Zahlenfolge: `[17, 8]`.
 
-#### Epiphora / Epipher 
+#### 2.2.2 Epiphora / Epipher 
 
 Die Epiphora bezeichnet die Wiederholung eines Wortes oder einer Wortgruppe am Ende aufeinanderfolgender Verse.
 
@@ -65,3 +65,42 @@ Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Epiphora wird
 
 <sub>(August von Platen)</sub>
 
+
+
+Das obige Beispiel führt zu folgender Zahlenfolge: `[1, 8, 8]`.
+
+#### 2.2.3 Alliteration
+
+Die Alliteration bezeichnet die Verwendung von Wörtern mit gleichen Anfangsbuchstaben kurz hintereinander in einem Satz.
+
+Eine Alliteration wird erkannt, wenn mehr als 60% der verwendeten Wörter mit demselben Anfangsbuchstaben anfangen und ein Vers aus mehr als 3 Wörtern besteht.
+
+##### Effekt
+
+Ein Vers mit Alliteration wird als 7 gezählt. Die Silben des Verses werden nicht beachtet.
+
+> _**W**ir **w**anken in **w**ohnsamer **W**iege,_ <small>(9 Silben)</small><br>
+> _Wind weht wohl ein Federlein los,_ <small>(8 Silben, nicht als Alliteration erkannt, da W < 60%)</small><br>
+> _**W**ie's **w**ehe, **w**ie's fliege, **w**ie's liege,_ <small>(9 Silben)</small><br>
+> _Fein fiel es und spielt es dem Vater im Schoß._ <small>(11 Silben)</small>
+
+<sub>(Clemens Brentano: Rheinmärchen)</sub>
+
+
+
+Das obige Beispiel führt zu folgender Zahlenfolge: `[7, 8, 7, 1]`.
+
+#### 2.2.4 Assonanz
+
+Die Assonanz bezeichnet den sich auf die Vokale beschränkenden Gleichklang zwischen mehreren Wörtern.
+
+##### Effekt
+
+Ein Vers mit Assonanz wird als 9 gezählt. Die Silben des Verses werden nicht beachtet.
+
+> _Die M**e**nschen g**e**ben und n**e**hmen **e**ben,_ <small>(10 Silben)</small>
+> _So ist nun mal das Leben._ <small>(7 Silben)</small>
+
+
+
+Das obige Beispiel führt zu folgender Zahlenfolge: `[9, 7]`.
