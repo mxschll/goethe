@@ -42,11 +42,8 @@ Eine Anapher ist die Wiederholung eines Wortes oder einer Wortgruppe zu Beginn a
 
 Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Anaphern wird addiert.
 
-> _**Wer** nie sein Brot mit Tränen aß,_ <small>(8 Silben)</small>
->
-> _**Wer** nie die kummervollen Nächte_ <small>(9 Silben)</small>
->
-> _Auf seinem Bette weinend saß.“_ <small>(8 Silben)</small>
+> _**Wer** nie sein Brot mit Tränen aß,_ <small>(8 Silben)</small><br>
+> _**Wer** nie die kummervollen Nächte_ <small>(9 Silben)</small><br>_Auf seinem Bette weinend saß.“_ <small>(8 Silben)</small>
 
 <sub>(Johann Wolfgang von Goethe: Wer nie sein Brot mit Tränen aß...)</sub>
 
@@ -62,13 +59,9 @@ Die Epiphora bezeichnet die Wiederholung eines Wortes oder einer Wortgruppe am E
 
 Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Epiphora wird subtrahiert.
 
-> _Sturm und Meeresgefährde trifft **nie**_ <small>(9 Silben)</small>
->
-> _Dich den Klugen, der geschifft **nie**;_ <small>(8 Silben)</small>
->
-> _Wer in Furcht sogar den Wein scheut,_ <small>(8 Silben)</small>
->
-> _trinkt das eingemischte Gift nie._ <small>(8 Silben)</small>
+> _Sturm und Meeresgefährde trifft **nie**_ <small>(9 Silben)</small><br>
+> _Dich den Klugen, der geschifft **nie**;_ <small>(8 Silben)</small><br>
+> _Wer in Furcht sogar den Wein scheut,_ <small>(8 Silben)</small><br>_trinkt das eingemischte Gift nie._ <small>(8 Silben)</small>
 
 <sub>(August von Platen)</sub>
 
