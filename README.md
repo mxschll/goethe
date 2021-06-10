@@ -14,17 +14,57 @@ Die Goethe Programmiersprache löst das geschilderte Problem: Sie befreit den En
 
 
 
-## 1. Anforderungen
-
-- Python  3.8+
+___
 
 
 
-## 2. Sprachspezifikation
+## 1. Installation
+
+Zur Installation wird Python 3.8+ benötigt.
+
+```bash
+git clone git@github.com:mxschll/goethe.git
+cd goethe
+python3 setup.py install
+```
+
+Unter Umständen muss unter Linux `sudo` zur Installation verwendet werden.
+
+
+
+## 2. Benutzung
+
+```bash
+goethe [-h] (-i INPUT | -e)
+```
+
+Mit `goethe -h` werden alle verfügbaren Optionen aufgelistet:
+
+```bash
+usage: goethe [-h] (-i INPUT | -e)
+
+Python interpreter for the Goethe programming language.
+
+optional arguments:
+  -h, --help            	show this help message and exit
+  -i INPUT, --input INPUT	Input file (.goethe)
+  -e, --editor          	Open the editor
+```
+
+Im folgenden Beispiel wird ein Goethe Programm in der Konsole ausgeführt:
+
+```bash
+> goethe -i examples/hello.goethe 
+Hello World!
+```
+
+
+
+## 3. Sprachspezifikation
 
 Die Goethe Programmiersprache baut auf den Silben der jeweiligen Verse eines Gedichtes auf. Je nach Anzahl der Silben wird ein entsprechender Befehl ausgeführt. Eine Liste der verfügbaren Befehle findet sich in der unten stehenden Tabelle.
 
-### 2.1 Silben pro Vers
+### 3.1 Silben pro Vers
 
 In jedem Vers werden die Silben gezählt und in einen entsprechenden Befehl umgewandelt:
 
@@ -45,11 +85,11 @@ Die Anzahl der Silben `n` wird immer `n mod 10` genommen. Hat ein Vers beispiels
 
 
 
-### 2.2 Stilmittel
+### 3.2 Stilmittel
 
 Neben der Silbenanzahl ist es auch möglich, mit bestimmten Stilmitteln Aktionen ausführen.
 
-#### 2.2.1 Anapher
+#### 3.2.1 Anapher
 
 Eine Anapher ist die Wiederholung eines Wortes oder einer Wortgruppe zu Beginn aufeinanderfolgender Verse.
 
@@ -66,7 +106,7 @@ Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Anaphern wird
 
 Das obige Beispiel führt zu folgenden Zahlenfolge: `[17, 8]`.
 
-#### 2.2.2 Epiphora / Epipher 
+#### 3.2.2 Epiphora / Epipher 
 
 Die Epiphora bezeichnet die Wiederholung eines Wortes oder einer Wortgruppe am Ende aufeinanderfolgender Verse.
 
@@ -84,7 +124,7 @@ Die Anzahl der Silben zweier <u>aufeinanderfolgender</u> Verse mit Epiphora wird
 
 Das obige Beispiel führt zu folgender Zahlenfolge: `[1, 8, 8]`.
 
-#### 2.2.3 Alliteration
+#### 3.2.3 Alliteration
 
 Die Alliteration bezeichnet die Verwendung von Wörtern mit gleichen Anfangsbuchstaben kurz hintereinander in einem Satz.
 
@@ -105,7 +145,7 @@ Ein Vers mit Alliteration wird als 7 gezählt. Die Silben des Verses werden nich
 
 Das obige Beispiel führt zu folgender Zahlenfolge: `[7, 8, 7, 1]`.
 
-#### 2.2.4 Assonanz
+#### 3.2.4 Assonanz
 
 Die Assonanz bezeichnet den sich auf die Vokale beschränkenden Gleichklang zwischen mehreren Wörtern.
 
@@ -113,7 +153,7 @@ Die Assonanz bezeichnet den sich auf die Vokale beschränkenden Gleichklang zwis
 
 Ein Vers mit Assonanz wird als 9 gezählt. Die Silben des Verses werden nicht beachtet.
 
-> _Die M**e**nschen g**e**ben und n**e**hmen **e**ben,_ <small>(10 Silben)</small>
+> _Die M**e**nschen g**e**ben und n**e**hmen **e**ben,_ <small>(10 Silben)</small><br>
 > _So ist nun mal das Leben._ <small>(7 Silben)</small>
 
 
