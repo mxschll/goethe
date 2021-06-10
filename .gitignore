@@ -1,3 +1,6 @@
 venv
 .vscode
 __pycache__
+dist
+build
+goethe.egg-info
