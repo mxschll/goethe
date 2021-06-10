@@ -214,6 +214,11 @@ class Interpreter:
 
         if instruction == None:
             # The end of the program has been reached.
+
+            if self.console_mode:
+                # Print out the return character when the program finishes.
+                print(chr(10), end="", flush=True)
+
             self.pointer = 0
             self.memory.reset()
             self.__dispatch_event('<end>')
