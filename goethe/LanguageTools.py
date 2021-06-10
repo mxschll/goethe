@@ -116,7 +116,7 @@ class LanguageTools:
         """Returns a list of positions of assonance in the text.
 
         Example:
-            The light of the fire is a sight.
+            The light of the fire is a sight at night.
 
         Returns:
             list: List of positions of assonance in the text.
