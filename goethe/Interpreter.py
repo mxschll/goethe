@@ -4,10 +4,10 @@ import random
 import logging
 from typing import Tuple, Callable
 
-from Token import Token
-from Memory import Memory
-from Tokenizer import Tokenizer
-from LanguageTools import LanguageTools
+from goethe.Token import Token
+from goethe.Memory import Memory
+from goethe.Tokenizer import Tokenizer
+from goethe.LanguageTools import LanguageTools
 
 
 class InvalidTokenException(Exception):

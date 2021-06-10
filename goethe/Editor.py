@@ -3,7 +3,8 @@ import os
 import webbrowser
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
-from Interpreter import Interpreter
+
+from goethe.Interpreter import Interpreter
 
 
 class TextWidget(tk.Text):

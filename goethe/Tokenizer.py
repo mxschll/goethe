@@ -1,5 +1,5 @@
-from LanguageTools import LanguageTools
-from Token import Token
+from goethe.Token import Token
+from goethe.LanguageTools import LanguageTools
 
 
 class Tokenizer:
