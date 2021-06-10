@@ -22,7 +22,7 @@ ___
 
 Zur Installation wird Python 3.8+ benötigt.
 
-```bash
+```shell
 git clone git@github.com:mxschll/goethe.git
 cd goethe
 python3 setup.py install
@@ -34,13 +34,15 @@ Unter Umständen muss unter Linux `sudo` zur Installation verwendet werden.
 
 ## 2. Benutzung
 
-```bash
+Nach der Installation kann der Interpreter mit dem Befehl `goethe` aufgerufen werden.
+
+```shell
 goethe [-h] (-i INPUT | -e)
 ```
 
 Mit `goethe -h` werden alle verfügbaren Optionen aufgelistet:
 
-```bash
+```shell
 usage: goethe [-h] (-i INPUT | -e)
 
 Python interpreter for the Goethe programming language.
@@ -53,7 +55,7 @@ optional arguments:
 
 Im folgenden Beispiel wird ein Goethe Programm in der Konsole ausgeführt:
 
-```bash
+```shell
 > goethe -i examples/hello.goethe 
 Hello World!
 ```
