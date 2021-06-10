@@ -1,7 +1,8 @@
 import sys
 import argparse
-from Editor import Editor
-from Interpreter import Interpreter
+
+from goethe.Editor import Editor
+from goethe.Interpreter import Interpreter
 
 
 class Parser(argparse.ArgumentParser):
@@ -20,7 +21,7 @@ parser = Parser(description="Python interpreter for the Goethe programming langu
 
 output_group = parser.add_mutually_exclusive_group(required=True)
 output_group.add_argument("-i", "--input", action="store", help="Input file (.goethe)")
-output_group.add_argument("-e", "--editor", action="store_true", help="Open editor")
+output_group.add_argument("-e", "--editor", action="store_true", help="Open the editor")
 
 def main():
     args = parser.parse_args()
